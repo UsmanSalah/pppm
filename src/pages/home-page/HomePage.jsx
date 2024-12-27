@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {
     combo,
     decerts,
@@ -13,7 +13,7 @@ import {
     sushi,
 } from "../../assets/index.js";
 
-
+const url = 'https://673c34cc96b8dcd5f3f8e777.mockapi.io/api/v1/pizza'
 
 const menu =[
     {
@@ -78,8 +78,24 @@ const sales = [
 ]
 
 const HomePage = () => {
+    const [pizzaDate,setPizzaDate] = useState([])
+
+    const fetchDate = async () => {
+        const response = await fetch(url);
+        const data = await response.json();
+        setPizzaDate(data);
+        console.log(data);
+    }
+    useEffect(() => {
+        fetchDate();
+    }, [])
+
+    if (!pizzaDate.length) {
+        return <h1 className={"text-center text-[44px]"}>...Loading</h1>
+    }
+
     return (
-        <div>
+        <div className={"container mx-auto"}>
             <div className={"flex gap-[30px]"}>
                 {menu.map((m) => {
                     return (
@@ -113,6 +129,13 @@ const HomePage = () => {
 
             <section id={"pizza"}>
                 <h2>Pizza</h2>
+                <div className={"flex"}>
+                    {pizzaDate[0].data.map(pizzaItem => {
+                        return (
+                            <div key={pizzaItem.name}> {pizzaItem.name}</div>
+                        )
+                    })}
+                </div>
             </section>
 
             <section id={"sushi"}>

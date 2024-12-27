@@ -1,9 +1,9 @@
 import React from 'react';
 
-const Header = () => {
+const Header = (props) => {
+    const {setShowModal} = props;
     return (
-        <div
-            className={" container border-b-[1px] py-[10px] border-[#F0F0F0] mx-auto flex items-center justify-between"}>
+        <div className={" container border-b-[1px] py-[10px] border-[#F0F0F0] mx-auto flex items-center justify-between"}>
             <div className={"flex items-center gap-[40px]"}>
                 <select className={""} name="" id="">
                     <option value="">Москва</option>
@@ -14,7 +14,9 @@ const Header = () => {
             </div>
             <div className={"flex items-center gap-[40px]"}>
                 <p>Время работы: c 11:00 до 23:00</p>
-                <p>
+                <p className={"cursor-pointer"} onClick={() => {
+                    setShowModal('login');
+                }}>
                     Войти в аккаунт
                 </p>
             </div>
